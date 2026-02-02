@@ -1,0 +1,25 @@
+{
+  "name": "eslint-plugin-react-native-enforce-props",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flomm/eslint-plugin-react-native-enforce-props.git"
+  },
+  "keywords": [
+    "eslint",
+    "plugin",
+    "props",
+    "react-native"
+  ],
+  "author": "Flomm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flomm/eslint-plugin-react-native-enforce-props/issues"
+  },
+  "homepage": "https://github.com/Flomm/eslint-plugin-react-native-enforce-props#readme",
+  "description": ""
+}
