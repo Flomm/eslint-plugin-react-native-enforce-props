@@ -4,7 +4,7 @@
   "main": "lib/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup eslint-plugin-react-native-enforce-props/lib"
+    "build": "tsup src/index.ts"
   },
   "repository": {
     "type": "git",
