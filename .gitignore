@@ -11,3 +11,5 @@ npm-debug.log
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+dist/
