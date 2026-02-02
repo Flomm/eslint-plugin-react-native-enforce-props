@@ -6,6 +6,7 @@ const pkg: { name: string; version: string } = JSON.parse(fs.readFileSync(new UR
 const meta = {
   name: pkg.name,
   version: pkg.version,
+  namespace: 'react-native-enforce-props',
 };
 
 export { rules, meta };
