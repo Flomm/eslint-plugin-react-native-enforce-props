@@ -23,18 +23,17 @@ export const enforceProps = createRule<EnforcePropsRuleOptions, MessageIds>({
           componentsToCheck: {
             type: 'array',
             items: { type: 'string' },
-            required: false,
             description:
               'The rule will check these components. Defaults to [ TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, Pressable]',
           },
           propsToCheck: {
             type: 'array',
             items: { type: 'string' },
-            required: true,
             description: 'These are the enforced props. Example: ["testID", "onPress"]. Required.',
           },
         },
         additionalProperties: false,
+        required: ['propsToCheck'],
       },
     ],
   },
