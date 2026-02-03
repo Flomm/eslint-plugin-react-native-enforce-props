@@ -3,7 +3,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "NodeNext",
     "outDir": "dist",
     "resolveJsonModule": true,
     "rootDir": "src",
