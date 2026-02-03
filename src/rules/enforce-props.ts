@@ -10,7 +10,7 @@ type Options = [
   }?,
 ];
 
-type MessageIds = 'missingTestId';
+type MessageIds = 'missingProp';
 
 export const enforceProps = createRule<Options, MessageIds>({
   name: 'enforce-props',
@@ -20,7 +20,7 @@ export const enforceProps = createRule<Options, MessageIds>({
     },
     type: 'suggestion',
     messages: {
-      missingTestId: 'Missing {{prop}} prop on {{componentName}} component.',
+      missingProp: 'Missing {{prop}} prop on {{componentName}} component.',
     },
     schema: [
       {
@@ -70,7 +70,7 @@ export const enforceProps = createRule<Options, MessageIds>({
           if (!hasProp) {
             context.report({
               node: name,
-              messageId: 'missingTestId',
+              messageId: 'missingProp',
               data: {
                 prop,
                 componentName,
