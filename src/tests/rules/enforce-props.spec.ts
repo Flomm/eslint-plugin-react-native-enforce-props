@@ -16,77 +16,88 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('enforce-props', enforceProps, {
-  valid: [
-    {
-      code: `<View><Image testID="test" /></View>`,
-      options: [
+describe('enforce-props', () => {
+  describe('should work properly when valid', () => {
+    ruleTester.run('enforce-props', enforceProps, {
+      valid: [
         {
-          componentsToCheck: ['Image', 'TouchableOpacity'],
-          propsToCheck: ['testID'],
+          code: `<View><Image testID="test" /></View>`,
+          options: [
+            {
+              componentsToCheck: ['Image', 'TouchableOpacity'],
+              propsToCheck: ['testID'],
+            },
+          ],
+        },
+        {
+          code: `<View><TouchableOpacity testID="test" /></View>`,
+          options: [
+            {
+              componentsToCheck: ['Image', 'TouchableOpacity'],
+              propsToCheck: ['testID'],
+            },
+          ],
         },
       ],
-    },
-    {
-      code: `<View><TouchableOpacity testID="test" /></View>`,
-      options: [
+      invalid: [],
+    });
+  });
+
+  describe('should work properly when invalid', () => {
+    ruleTester.run('enforce-props', enforceProps, {
+      valid: [],
+      invalid: [
         {
-          componentsToCheck: ['Image', 'TouchableOpacity'],
-          propsToCheck: ['testID'],
+          code: `<View><Image /><TouchableOpacity/></View>`,
+          options: [
+            {
+              componentsToCheck: ['Image'],
+              propsToCheck: ['testID'],
+            },
+          ],
+          errors: [
+            {
+              messageId: 'missingProp',
+              data: {
+                componentName: 'Image',
+                prop: 'testID',
+              },
+            },
+          ],
+        },
+        {
+          code: `<View><Image /><TouchableOpacity testID="test"/></View>`,
+          options: [
+            {
+              componentsToCheck: ['Image', 'TouchableOpacity'],
+              propsToCheck: ['onPress', 'testID'],
+            },
+          ],
+          errors: [
+            {
+              messageId: 'missingProp',
+              data: {
+                componentName: 'Image',
+                prop: 'onPress',
+              },
+            },
+            {
+              messageId: 'missingProp',
+              data: {
+                componentName: 'Image',
+                prop: 'testID',
+              },
+            },
+            {
+              messageId: 'missingProp',
+              data: {
+                componentName: 'TouchableOpacity',
+                prop: 'onPress',
+              },
+            },
+          ],
         },
       ],
-    },
-  ],
-  invalid: [
-    {
-      code: `<View><Image /><TouchableOpacity/></View>`,
-      options: [
-        {
-          componentsToCheck: ['Image'],
-          propsToCheck: ['testID'],
-        },
-      ],
-      errors: [
-        {
-          messageId: 'missingProp',
-          data: {
-            componentName: 'Image',
-            prop: 'testID',
-          },
-        },
-      ],
-    },
-    {
-      code: `<View><Image /><TouchableOpacity testID="test"/></View>`,
-      options: [
-        {
-          componentsToCheck: ['Image', 'TouchableOpacity'],
-          propsToCheck: ['onPress', 'testID'],
-        },
-      ],
-      errors: [
-        {
-          messageId: 'missingProp',
-          data: {
-            componentName: 'Image',
-            prop: 'onPress',
-          },
-        },
-        {
-          messageId: 'missingProp',
-          data: {
-            componentName: 'Image',
-            prop: 'testID',
-          },
-        },
-        {
-          messageId: 'missingProp',
-          data: {
-            componentName: 'TouchableOpacity',
-            prop: 'onPress',
-          },
-        },
-      ],
-    },
-  ],
+    });
+  });
 });
