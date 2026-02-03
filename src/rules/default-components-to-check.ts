@@ -1,5 +1,4 @@
-export const defaultComponents = [
-  'TextInput',
+export const defaultComponentsToCheck = [
   'TouchableOpacity',
   'TouchableHighlight',
   'TouchableNativeFeedback',

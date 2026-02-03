@@ -1,12 +1,12 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
-import { defaultComponents } from './default-components';
+import { defaultComponentsToCheck } from './default-components-to-check';
 
 export const createRule = ESLintUtils.RuleCreator(name => 'Flomm');
 
 type Options = [
   {
-    disableDefaultComponents?: string[];
-    enableComponents?: string[];
+    componentsToCheck?: string[];
+    propsToCheck?: string[];
   }?,
 ];
 
@@ -20,14 +20,35 @@ export const enforceProps = createRule<Options, MessageIds>({
     },
     type: 'suggestion',
     messages: {
-      missingTestId: "Missing 'testID' attribute in {{component}} component.",
+      missingTestId: 'Missing {{prop}} prop on {{componentName}} component.',
     },
-    schema: [],
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          componentsToCheck: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+          propsToCheck: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
   },
   defaultOptions: [],
   create: context => {
     const options = context.options[0] || {};
-    const { disableDefaultComponents = [], enableComponents = [] } = options;
+    const { componentsToCheck = defaultComponentsToCheck, propsToCheck = [] } = options;
+
+    if (propsToCheck.length < 1) {
+      throw new Error(
+        'eslint-plugin-react-native-enforce-props - At least one prop must be specified with the `propsToCheck` option!',
+      );
+    }
 
     return {
       JSXOpeningElement({ name, attributes }) {
@@ -37,25 +58,26 @@ export const enforceProps = createRule<Options, MessageIds>({
 
         const componentName = name.name;
 
-        const filteredDefaultComponents = defaultComponents.filter(
-          component => !disableDefaultComponents.includes(component),
-        );
-        const mergedAllowedComponents = [...filteredDefaultComponents, ...enableComponents];
-        if (mergedAllowedComponents.includes(componentName)) {
-          const hasTestIDAttribute = attributes.some(
-            attribute => attribute.type === 'JSXAttribute' && attribute.name.name === 'testID',
+        if (!componentsToCheck.includes(componentName)) {
+          return;
+        }
+
+        propsToCheck.forEach(prop => {
+          const hasProp = attributes.some(
+            attribute => attribute.type === 'JSXAttribute' && attribute.name.name === prop,
           );
 
-          if (!hasTestIDAttribute) {
+          if (!hasProp) {
             context.report({
               node: name,
               messageId: 'missingTestId',
               data: {
-                component: componentName,
+                prop,
+                componentName,
               },
             });
           }
-        }
+        });
       },
     };
   },
