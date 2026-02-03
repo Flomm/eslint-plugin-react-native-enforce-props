@@ -1,6 +1,6 @@
 import { rules } from './rules';
 import pkg from '../package.json';
-import { ESLint, Rule } from 'eslint';
+import { ESLint } from 'eslint';
 import { RuleModule } from '@typescript-eslint/utils/ts-eslint';
 import { EnforcePropsRuleOptions } from './rules/enforce-props-rule-options.type';
 
@@ -17,5 +17,7 @@ const plugin: Plugin = {
   },
   rules,
 };
+
+export { rules };
 
 export default plugin;
