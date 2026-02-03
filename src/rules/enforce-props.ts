@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 import { defaultComponentsToCheck } from './default-components-to-check';
 
-export const createRule = ESLintUtils.RuleCreator(name => 'Flomm');
+const createRule = ESLintUtils.RuleCreator(name => name);
 
 type Options = [
   {

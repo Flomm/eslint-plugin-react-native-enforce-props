@@ -1,10 +1,9 @@
 import { rules } from './rules';
-
-const { name, version } = require('../package.json') as typeof import('../package.json');
+import pkg from '../package.json';
 
 const meta = {
-  name,
-  version,
+  name: pkg.name,
+  version: pkg.version,
   namespace: 'react-native-enforce-props',
 };
 
