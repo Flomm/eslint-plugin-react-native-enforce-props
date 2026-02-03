@@ -1,18 +1,12 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 import { defaultComponentsToCheck } from './default-components-to-check';
+import { EnforcePropsRuleOptions } from './enforce-props-rule-options.type';
 
 const createRule = ESLintUtils.RuleCreator(name => name);
 
-type Options = [
-  {
-    componentsToCheck?: string[];
-    propsToCheck?: string[];
-  }?,
-];
-
 type MessageIds = 'missingProp';
 
-export const enforceProps = createRule<Options, MessageIds>({
+export const enforceProps = createRule<EnforcePropsRuleOptions, MessageIds>({
   name: 'enforce-props',
   meta: {
     docs: {
