@@ -7,7 +7,7 @@ import { EnforcePropsRuleOptions } from './rules/enforce-props-rule-options.type
 type RuleKey = keyof typeof rules;
 
 interface Plugin extends Omit<ESLint.Plugin, 'rules'> {
-  rules: Record<RuleKey, RuleModule<string, EnforcePropsRuleOptions>>;
+  rules: Record<RuleKey, RuleModule<string, [EnforcePropsRuleOptions?]>>;
 }
 const plugin: Plugin = {
   meta: {
