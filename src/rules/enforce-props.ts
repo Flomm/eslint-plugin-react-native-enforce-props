@@ -58,7 +58,6 @@ export const enforceProps = createRule<[EnforcePropsRuleOptions?], MessageIds>({
           },
         },
         additionalProperties: false,
-        required: ['propsToCheck', 'componentsToCheck'],
       },
     ],
   },
