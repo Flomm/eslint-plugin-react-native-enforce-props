@@ -1,8 +1,9 @@
 {
   "name": "eslint-plugin-react-native-enforce-props",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Enforce a specific set of props on specific elements",
   "main": "dist/index.js",
+  "exports": "./dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsup src/index.ts",
@@ -13,6 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/Flomm/eslint-plugin-react-native-enforce-props.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "eslint",
     "plugin",
@@ -20,7 +24,7 @@
     "react-native"
   ],
   "author": "Flomm",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Flomm/eslint-plugin-react-native-enforce-props/issues"
   },
