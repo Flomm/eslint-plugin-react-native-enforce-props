@@ -9,7 +9,7 @@ type MessageIds = 'missingProp';
 const checkProperty = (value: string[], type: keyof EnforceableOptions) => {
   if (value.length < 1) {
     throw new Error(
-      `eslint-plugin-react-native-enforce-props - At least one prop must be specified with the '${type}' option!`,
+      `eslint-plugin-react-native-enforce-props - At least one element must be specified in the '${type}' option!`,
     );
   }
 };
