@@ -1,12 +1,36 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
-import { defaultComponentsToCheck } from './default-components-to-check';
-import { EnforcePropsRuleOptions } from './enforce-props-rule-options.type';
+import { EnforceableOptions, EnforcePropsRuleOptions } from './enforce-props-rule-options.type';
+import { RulePresets } from './presets';
 
 const createRule = ESLintUtils.RuleCreator(name => name);
 
 type MessageIds = 'missingProp';
 
-export const enforceProps = createRule<EnforcePropsRuleOptions, MessageIds>({
+const checkProperty = (value: string[], type: keyof EnforceableOptions) => {
+  if (value.length < 1) {
+    throw new Error(
+      `eslint-plugin-react-native-enforce-props - At least one prop must be specified with the '${type}' option!`,
+    );
+  }
+};
+
+const createDataToCheck = ({
+  preset,
+  componentsToCheck = [],
+  propsToCheck = [],
+}: EnforcePropsRuleOptions): EnforceableOptions => {
+  if (preset) {
+    return RulePresets[preset];
+  }
+  checkProperty(componentsToCheck, 'componentsToCheck');
+  checkProperty(propsToCheck, 'propsToCheck');
+  return {
+    componentsToCheck,
+    propsToCheck,
+  };
+};
+
+export const enforceProps = createRule<[EnforcePropsRuleOptions?], MessageIds>({
   name: 'enforce-props',
   meta: {
     docs: {
@@ -20,6 +44,7 @@ export const enforceProps = createRule<EnforcePropsRuleOptions, MessageIds>({
       {
         type: 'object',
         properties: {
+          preset: { type: 'string' },
           componentsToCheck: {
             type: 'array',
             items: { type: 'string' },
@@ -33,20 +58,20 @@ export const enforceProps = createRule<EnforcePropsRuleOptions, MessageIds>({
           },
         },
         additionalProperties: false,
-        required: ['propsToCheck'],
+        required: ['propsToCheck', 'componentsToCheck'],
       },
     ],
   },
   defaultOptions: [],
   create: context => {
     const options = context.options[0] || {};
-    const { componentsToCheck = defaultComponentsToCheck, propsToCheck = [] } = options;
+    const { preset } = options;
 
-    if (propsToCheck.length < 1) {
-      throw new Error(
-        'eslint-plugin-react-native-enforce-props - At least one prop must be specified with the `propsToCheck` option!',
-      );
+    if (preset !== undefined && !(preset in RulePresets)) {
+      throw new Error('eslint-plugin-react-native-enforce-props - Invalid `preset` option! Accepted values: `testID`');
     }
+
+    const { componentsToCheck, propsToCheck } = createDataToCheck(options);
 
     return {
       JSXOpeningElement({ name, attributes }) {
