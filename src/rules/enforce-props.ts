@@ -44,7 +44,7 @@ export const enforceProps = createRule<[EnforcePropsRuleOptions?], MessageIds>({
       {
         type: 'object',
         properties: {
-          preset: { type: 'string' },
+          preset: { type: 'string', description: "Use one of the presets - Currently supported: 'testID'" },
           componentsToCheck: {
             type: 'array',
             items: { type: 'string' },
