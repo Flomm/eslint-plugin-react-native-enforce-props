@@ -1,6 +1,7 @@
 name: "Quality pipeline"
 on:
   pull_request:
+    branches: ['**']
   push:
     branches: ['main', 'dev' ]
 
